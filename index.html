@@ -8,7 +8,7 @@
 *{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
 body{margin:0;background:#f8f6ef;color:#222}
 .header{background:linear-gradient(90deg,#7a1f1f,#a33a2f);color:#fff;padding:18px;text-align:center}
-.header h1{margin:0;font-size:19px;letter-spacing:.2px}
+.header h1{margin:0;font-size:19px}
 .header p{margin:6px 0 0;font-size:12px;opacity:.92}
 .container{max-width:860px;margin:0 auto;padding:12px}
 .search{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid #d4b896;font-size:15px;outline:none;background:#fff}
@@ -30,13 +30,13 @@ select{width:100%;padding:12px;border-radius:10px;border:1.5px solid #d4b896;bac
 <body>
 <div class="header">
 <h1>WB PWD IB FINDER - All 24 Bungalows</h1>
-<p>Search • Near Me • Directions • Booking in 2 Clicks | PWD, West Bengal</p>
+<p>District Wise Search • Near Me • Directions • Official Booking</p>
 </div>
 <div class="container">
-<input id="q" class="search" placeholder="Search bungalow, district, circle... e.g. Darjeeling, Digha" oninput="render()">
+<input id="q" class="search" placeholder="Search bungalow or district... e.g. Darjeeling, Digha" oninput="render()">
 <div class="row">
 <select id="dist" onchange="render()"><option value="">All Districts</option></select>
-<select id="circle" onchange="render()"><option value="">All PWD Circles</option></select>
+<select style="display:none"><option></option></select>
 </div>
 <div class="row">
 <button class="btn btn-p" onclick="nearMe()">📍 IB Near Me</button>
@@ -46,41 +46,40 @@ select{width:100%;padding:12px;border-radius:10px;border:1.5px solid #d4b896;bac
 <div id="list"></div>
 <div class="footer">
 <b>Booking Portal:</b> <a href="https://pwdbungalow.wb.gov.in" target="_blank">pwdbungalow.wb.gov.in</a><br>
-Conceptualized & Developed by <b>Jayanta Kumar Chakraborty, EE/PWD, Govt. of West Bengal</b><br>
-Original Concept • All 24 IBs Mapped with GPS • For Official Use
+Conceptualized & Developed by <b>Jayanta Kumar Chakraborty, EE/PWD</b><br>
+All 24 IBs Mapped with GPS • For Official Use
 </div>
 </div>
 <script>
 const DATA=[
-{name:"Alipurduar Inspection Bungalow",district:"Alipurduar",circle:"North Bengal Circle",division:"Alipurduar",lat:26.489, lng:89.5234},
-{name:"Asansol Inspection Bungalow",district:"Paschim Bardhaman",circle:"Asansol Circle",division:"Asansol",lat:23.6889, lng:86.9661},
-{name:"Balurghat Inspection Bungalow",district:"Dakshin Dinajpur",circle:"Malda Circle",division:"Balurghat",lat:25.2214, lng:88.7725},
-{name:"Basirhat Inspection Bungalow",district:"North 24 Parganas",circle:"Barasat Circle",division:"Basirhat",lat:22.6577, lng:88.8677},
-{name:"Berhampore Inspection Bungalow",district:"Murshidabad",circle:"Berhampore Circle",division:"Berhampore",lat:24.0968, lng:88.25},
-{name:"Bishnupur Inspection Bungalow",district:"Bankura",circle:"Bankura Circle",division:"Bishnupur",lat:23.0723, lng:87.3199},
-{name:"Bolpur Inspection Bungalow",district:"Birbhum",circle:"Bolpur Circle",division:"Bolpur-Santiniketan",lat:23.6712, lng:87.6814},
-{name:"Bongaon Inspection Bungalow",district:"North 24 Parganas",circle:"Barasat Circle",division:"Bongaon",lat:23.0435, lng:88.8184},
-{name:"Chalsa Inspection Bungalow",district:"Jalpaiguri",circle:"Jalpaiguri Circle",division:"Chalsa",lat:26.8826, lng:88.777},
-{name:"Cooch Behar Highway IB",district:"Cooch Behar",circle:"Cooch Behar Circle",division:"Cooch Behar",lat:26.322, lng:89.448},
-{name:"Cooch Behar Inspection Bungalow",district:"Cooch Behar",circle:"Cooch Behar Circle",division:"Cooch Behar Town",lat:26.35, lng:89.45},
-{name:"Darjeeling Inspection Bungalow",district:"Darjeeling",circle:"Darjeeling Circle",division:"Darjeeling",lat:27.041, lng:88.2663},
-{name:"Digha Inspection Bungalow",district:"Purba Medinipur",circle:"Contai Circle",division:"Digha",lat:21.6279, lng:87.5052},
-{name:"Durgapur Inspection Bungalow",district:"Paschim Bardhaman",circle:"Durgapur Circle",division:"Durgapur",lat:23.5204, lng:87.3119},
-{name:"Jhargram Inspection Bungalow",district:"Jhargram",circle:"West Midnapore Circle",division:"Jhargram",lat:22.45, lng:86.99},
-{name:"Kalyani Inspection Bungalow",district:"Nadia",circle:"Nadia Circle",division:"Kalyani",lat:22.975, lng:88.4345},
-{name:"Krishnanagar IB",district:"Nadia",circle:"Nadia Circle",division:"Krishnanagar",lat:23.4058, lng:88.4902},
-{name:"Kulik Inspection Bungalow",district:"Uttar Dinajpur",circle:"Malda Circle",division:"Raiganj-Kulik",lat:25.623, lng:88.1215},
-{name:"Madarihat Inspection Bungalow",district:"Alipurduar",circle:"Jalpaiguri Circle",division:"Madarihat",lat:26.698, lng:89.268},
-{name:"Malda Inspection Bungalow Bugbari",district:"Malda",circle:"Malda Circle",division:"Malda Bugbari",lat:25.0108, lng:88.1411},
-{name:"Peshok Inspection Bungalow",district:"Darjeeling",circle:"Darjeeling Circle",division:"Peshok",lat:27.078, lng:88.384},
-{name:"Purulia Bungalow",district:"Purulia",circle:"Purulia Circle",division:"Purulia",lat:23.332, lng:86.365},
-{name:"Shaktigarh Rest Shade, Siliguri",district:"Darjeeling",circle:"Siliguri Circle",division:"Shaktigarh, Siliguri",lat:26.75, lng:88.42},
-{name:"Siliguri Inspection Bungalow",district:"Darjeeling",circle:"Siliguri Circle",division:"Siliguri",lat:26.7271, lng:88.3953}
+{name:"Alipurduar Inspection Bungalow",district:"Alipurduar",lat:26.489,lng:89.5234},
+{name:"Asansol Inspection Bungalow",district:"Paschim Bardhaman",lat:23.6889,lng:86.9661},
+{name:"Balurghat Inspection Bungalow",district:"Dakshin Dinajpur",lat:25.2214,lng:88.7725},
+{name:"Basirhat Inspection Bungalow",district:"North 24 Parganas",lat:22.6577,lng:88.8677},
+{name:"Berhampore Inspection Bungalow",district:"Murshidabad",lat:24.0968,lng:88.25},
+{name:"Bishnupur Inspection Bungalow",district:"Bankura",lat:23.0723,lng:87.3199},
+{name:"Bolpur Inspection Bungalow",district:"Birbhum",lat:23.6712,lng:87.6814},
+{name:"Bongaon Inspection Bungalow",district:"North 24 Parganas",lat:23.0435,lng:88.8184},
+{name:"Chalsa Inspection Bungalow",district:"Jalpaiguri",lat:26.8826,lng:88.777},
+{name:"Cooch Behar Highway IB",district:"Cooch Behar",lat:26.322,lng:89.448},
+{name:"Cooch Behar Inspection Bungalow",district:"Cooch Behar",lat:26.35,lng:89.45},
+{name:"Darjeeling Inspection Bungalow",district:"Darjeeling",lat:27.041,lng:88.2663},
+{name:"Digha Inspection Bungalow",district:"Purba Medinipur",lat:21.6279,lng:87.5052},
+{name:"Durgapur Inspection Bungalow",district:"Paschim Bardhaman",lat:23.5204,lng:87.3119},
+{name:"Jhargram Inspection Bungalow",district:"Jhargram",lat:22.45,lng:86.99},
+{name:"Kalyani Inspection Bungalow",district:"Nadia",lat:22.975,lng:88.4345},
+{name:"Krishnanagar IB",district:"Nadia",lat:23.4058,lng:88.4902},
+{name:"Kulik Inspection Bungalow",district:"Uttar Dinajpur",lat:25.623,lng:88.1215},
+{name:"Madarihat Inspection Bungalow",district:"Alipurduar",lat:26.698,lng:89.268},
+{name:"Malda Inspection Bungalow Bugbari",district:"Malda",lat:25.0108,lng:88.1411},
+{name:"Peshok Inspection Bungalow",district:"Darjeeling",lat:27.078,lng:88.384},
+{name:"Purulia Bungalow",district:"Purulia",lat:23.332,lng:86.365},
+{name:"Shaktigarh Rest Shade, Siliguri",district:"Darjeeling",lat:26.75,lng:88.42},
+{name:"Siliguri Inspection Bungalow",district:"Darjeeling",lat:26.7271,lng:88.3953}
 ];
 function init(){
- const d=document.getElementById('dist'),c=document.getElementById('circle');
+ const d=document.getElementById('dist');
  [...new Set(DATA.map(x=>x.district))].sort().forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v;d.appendChild(o)});
- [...new Set(DATA.map(x=>x.circle))].sort().forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v;c.appendChild(o)});
 }
 function distKm(a,b,c,d){const R=6371;const dLat=(c-a)*Math.PI/180,dLon=(d-b)*Math.PI/180;const la1=a*Math.PI/180,la2=c*Math.PI/180;const x=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLon/2)**2;return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
 let uLat=null,uLng=null;
@@ -90,27 +89,25 @@ function nearMe(){
   uLat=p.coords.latitude;uLng=p.coords.longitude;
   DATA.forEach(it=>it._d=distKm(uLat,uLng,it.lat,it.lng));
   DATA.sort((a,b)=>a._d-b._d); render(true);
- },()=>alert('Please allow location permission'));
+ },()=>alert('Please allow location'));
 }
-function clearF(){document.getElementById('q').value='';document.getElementById('dist').value='';document.getElementById('circle').value='';uLat=null;DATA.forEach(d=>delete d._d);render();}
+function clearF(){document.getElementById('q').value='';document.getElementById('dist').value='';uLat=null;DATA.forEach(d=>delete d._d);render();}
 function render(isNear=false){
  const q=document.getElementById('q').value.toLowerCase();
  const df=document.getElementById('dist').value;
- const cf=document.getElementById('circle').value;
  let list=DATA.filter(it=>{
   if(df&&it.district!==df) return false;
-  if(cf&&it.circle!==cf) return false;
-  if(q){const h=(it.name+' '+it.district+' '+it.circle).toLowerCase();if(!h.includes(q)) return false;}
+  if(q){const h=(it.name+' '+it.district).toLowerCase();if(!h.includes(q)) return false;}
   return true;
  });
  document.getElementById('count').textContent=`Showing ${list.length} of 24 IBs${isNear?' • Sorted by nearest':''}`;
  document.getElementById('list').innerHTML=list.map(it=>`
   <div class="card">
    <b>${it.name}</b> ${it._d!==undefined?`<span class="dist">${it._d.toFixed(1)} km away</span>`:''}
-   <div class="meta">📍 ${it.district} • ${it.circle} • ${it.division}</div>
+   <div class="meta">📍 District: ${it.district}</div>
    <div class="acts">
     <a class="map" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=${it.lat},${it.lng}">🧭 Directions</a>
-    <a class="book" target="_blank" href="https://pwdbungalow.wb.gov.in">🏨 Book on Portal</a>
+    <a class="book" target="_blank" href="https://pwdbungalow.wb.gov.in">🏨 Book</a>
    </div>
   </div>`).join('');
 }
