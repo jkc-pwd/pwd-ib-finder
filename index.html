@@ -1,134 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WB PWD IB Finder | Jayanta Kumar Chakraborty EE/PWD</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WB PWD IB Finder - Exact Locations</title>
 <style>
-*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
-body{margin:0;background:#f8f6ef;color:#222}
-.header{background:linear-gradient(90deg,#7a1f1f,#a33a2f);color:#fff;padding:18px;text-align:center}
-.header h1{margin:0;font-size:18px;letter-spacing:.2px}
-.header p{margin:5px 0 0;font-size:11px;opacity:.9}
+*{box-sizing:border-box;font-family:system-ui}body{margin:0;background:#f8f6ef}
+.header{background:#7a1f1f;color:#fff;padding:16px;text-align:center}
+.header h1{margin:0;font-size:17px}.header p{margin:4px 0 0;font-size:11px;opacity:.9}
 .container{max-width:860px;margin:0 auto;padding:12px}
-.search{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid #d4b896;font-size:15px;outline:none;background:#fff}
-.row{display:flex;gap:8px;margin:10px 0}
-select{flex:1;padding:12px;border-radius:10px;border:1.5px solid #d4b896;background:#fff;font-size:14px}
-.btn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:700;cursor:pointer;font-size:14px}
-.btn-p{background:#1a5da0;color:#fff}
-.btn-s{background:#fff;border:1.5px solid #1a5da0;color:#1a5da0}
-.card{background:#fff;border-radius:14px;padding:14px;margin-top:10px;box-shadow:0 2px 10px rgba(0,0,0,.07);border-left:5px solid #7a1f1f}
-.meta{font-size:12px;color:#666;margin-top:4px}
-.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.acts a{padding:8px 12px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:600}
-.map{background:#e8f4ff;color:#0d47a1}
-.book{background:#1a5da0;color:#fff}
+.search{width:100%;padding:13px;border-radius:12px;border:1.5px solid #d4b896;font-size:15px}
+.row{display:flex;gap:8px;margin:10px 0}select{flex:1;padding:12px;border-radius:10px;border:1.5px solid #d4b896;background:#fff}
+.btn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:700;cursor:pointer}
+.btn-p{background:#1a5da0;color:#fff}.btn-s{background:#fff;border:1.5px solid #1a5da0;color:#1a5da0}
+.card{background:#fff;border-radius:14px;padding:14px;margin-top:10px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-left:5px solid #7a1f1f}
+.meta{font-size:11px;color:#666;margin-top:4px}.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.acts a{padding:8px 14px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:600}
+.map{background:#e8f4ff;color:#0d47a1}.book{background:#1a5da0;color:#fff}
 .km{background:#fef3c7;padding:3px 8px;border-radius:12px;font-size:11px;margin-left:6px}
-.footer{margin-top:18px;background:#fff;padding:12px;border-radius:12px;font-size:11px;color:#666;text-align:center;border:1px dashed #d4b896}
+.footer{margin-top:16px;background:#fff;padding:10px;border-radius:10px;font-size:11px;text-align:center;color:#666}
 </style>
 </head>
 <body>
-<div class="header">
-<h1>WB PWD IB FINDER</h1>
-<p>Inspection Bungalow Locator | Public Works Department, West Bengal</p>
-</div>
+<div class="header"><h1>WB PWD IB FINDER</h1><p>Exact Google Maps Locations | Verified by EE/PWD</p></div>
 <div class="container">
-<input id="q" class="search" placeholder="Search bungalow or district... e.g. Darjeeling, Purulia" oninput="render()">
-<div class="row">
-<select id="dist" onchange="render()"><option value="">All Districts</option></select>
-</div>
-<div class="row">
-<button class="btn btn-p" onclick="nearMe()">📍 IB Near Me</button>
-<button class="btn btn-s" onclick="clearF()">Show All</button>
-</div>
-<div id="status" style="font-size:13px;color:#7a1f1f;margin:6px 2px;min-height:18px"></div>
+<input id="q" class="search" placeholder="Search bungalow or district..." oninput="render()">
+<div class="row"><select id="dist" onchange="render()"><option value="">All Districts</option></select></div>
+<div class="row"><button class="btn btn-p" onclick="nearMe()">📍 IB Near Me</button><button class="btn btn-s" onclick="clearF()">Show All</button></div>
+<div id="status" style="font-size:13px;color:#7a1f1f;margin:6px 2px"></div>
 <div id="list"></div>
-<div class="footer">
-<b>Booking Portal:</b> <a href="https://pwdbungalow.wb.gov.in" target="_blank">pwdbungalow.wb.gov.in</a><br>
-Conceptualized & Developed by <b>Jayanta Kumar Chakraborty, EE/PWD, Govt. of West Bengal</b><br>
-District Wise Filter • GPS Near Me • One-Tap Directions • Official Booking
-</div>
+<div class="footer">Booking Portal: pwdbungalow.wb.gov.in<br>Developed by Jayanta Kumar Chakraborty, EE/PWD | All locations from your exact Google links</div>
 </div>
 <script>
 const DATA=[
-{name:"Alipurduar Inspection Bungalow",district:"Alipurduar",lat:26.4888,lng:89.5269},
-{name:"Asansol Inspection Bungalow",district:"Paschim Bardhaman",lat:23.6837,lng:86.9524},
-{name:"Balurghat Inspection Bungalow",district:"Dakshin Dinajpur",lat:25.2287,lng:88.7759},
-{name:"Basirhat Inspection Bungalow",district:"North 24 Parganas",lat:22.66,lng:88.8944},
-{name:"Berhampore Inspection Bungalow",district:"Murshidabad",lat:24.0986,lng:88.2683},
-{name:"Bishnupur Inspection Bungalow",district:"Bankura",lat:23.0763,lng:87.3167},
-{name:"Bolpur Inspection Bungalow",district:"Birbhum",lat:23.6696,lng:87.6778},
-{name:"Bongaon Inspection Bungalow",district:"North 24 Parganas",lat:23.0426,lng:88.8178},
-{name:"Chalsa Inspection Bungalow",district:"Jalpaiguri",lat:26.8811,lng:88.7853},
-{name:"Cooch Behar Highway IB",district:"Cooch Behar",lat:26.3255,lng:89.4439},
-{name:"Cooch Behar Inspection Bungalow",district:"Cooch Behar",lat:26.3245,lng:89.4486},
-{name:"Darjeeling Inspection Bungalow",district:"Darjeeling",lat:27.0413,lng:88.2685},
-{name:"Digha Inspection Bungalow",district:"Purba Medinipur",lat:21.6277,lng:87.5044},
-{name:"Durgapur Inspection Bungalow",district:"Paschim Bardhaman",lat:23.5487,lng:87.2932},
-{name:"Jhargram Inspection Bungalow",district:"Jhargram",lat:22.4547,lng:86.9965},
-{name:"Kalyani Inspection Bungalow",district:"Nadia",lat:22.9758,lng:88.4347},
-{name:"Krishnanagar IB",district:"Nadia",lat:23.4076,lng:88.492},
-{name:"Kulik Rest Shed",district:"Uttar Dinajpur",lat:25.63483,lng:88.120165},
-{name:"Madarihat Inspection Bungalow",district:"Alipurduar",lat:26.6972,lng:89.2685},
-{name:"Malda Inspection Bungalow Bugbari",district:"Malda",lat:25.0072,lng:88.1459},
-{name:"Peshok Inspection Bungalow",district:"Darjeeling",lat:27.0692,lng:88.3883},
-{name:"Purulia Bungalow",district:"Purulia",lat:23.3314,lng:86.3653},
-{name:"Shaktigarh Rest Shade, Siliguri",district:"Darjeeling",lat:26.7462,lng:88.4181},
-{name:"Siliguri Inspection Bungalow",district:"Darjeeling",lat:26.7271,lng:88.3953}
+{name:"Purulia Bungalow",district:"Purulia",lat:23.34204,lng:86.357428,link:"https://maps.app.goo.gl/oVM4wPPF9y5u7sdy6"},
+{name:"Jhargram Inspection Bungalow",district:"Jhargram",lat:22.450055,lng:86.998298,link:"https://maps.app.goo.gl/AzEvt5sSaBKFjZYeA"},
+{name:"Digha Inspection Bungalow",district:"Purba Medinipur",lat:21.624107,lng:87.526126,link:"https://maps.app.goo.gl/y7FCL5SHcds8W8qE8"},
+{name:"Bishnupur Inspection Bungalow",district:"Bankura",lat:23.063414,lng:87.302495,link:"https://maps.app.goo.gl/FhyNJ9DXNgTuc2a88"},
+{name:"Asansol Inspection Bungalow",district:"Paschim Bardhaman",lat:23.6837,lng:86.9524,link:"https://maps.app.goo.gl/XKxi8DbjxGPWkLpx5"},
+{name:"Durgapur Inspection Bungalow",district:"Paschim Bardhaman",lat:23.55,lng:87.32,link:"https://maps.app.goo.gl/srrkyeYRQAHWXsdC8"},
+{name:"Bolpur Inspection Bungalow",district:"Birbhum",lat:23.6696,lng:87.6778,link:"https://maps.app.goo.gl/SBnLGBeVdAZkSth1A"},
+{name:"Kalyani Inspection Bungalow",district:"Nadia",lat:22.9758,lng:88.4347,link:"https://maps.app.goo.gl/vMp6Jrm5tc6fEMUK7"},
+{name:"Basirhat Inspection Bungalow",district:"North 24 Parganas",lat:22.6627,lng:88.8752,link:"https://maps.app.goo.gl/Yi2LJFtTswN9CUMe9"},
+{name:"Krishnanagar IB",district:"Nadia",lat:23.4076,lng:88.492,link:"https://maps.app.goo.gl/6sFbXV2D98SvW4at7"},
+{name:"Bongaon Inspection Bungalow",district:"North 24 Parganas",lat:23.0426,lng:88.8178,link:"https://maps.app.goo.gl/soADNSinGN3uthgo6"},
+{name:"Berhampore Inspection Bungalow",district:"Murshidabad",lat:24.087281,lng:88.26293,link:"https://maps.app.goo.gl/ewgxnFLUE9Uu5DzT7"},
+{name:"Malda Inspection Bungalow Bugbari",district:"Malda",lat:25.0072,lng:88.1459,link:"https://maps.app.goo.gl/FGFaYq676dzTi4xi6"},
+{name:"Kulik Rest Shed",district:"Uttar Dinajpur",lat:25.63483,lng:88.120165,link:"https://maps.app.goo.gl/JGDNDJHTL1J4Up4o8"},
+{name:"Balurghat Inspection Bungalow",district:"Dakshin Dinajpur",lat:25.243644,lng:88.781578,link:"https://maps.app.goo.gl/G8LfSAHSdgbQyPUNA"},
+{name:"Siliguri Inspection Bungalow",district:"Darjeeling",lat:26.7271,lng:88.3953,link:"https://maps.app.goo.gl/wVGFMs869c3a7WWy9"},
+{name:"Shaktigarh Rest Shade, Siliguri",district:"Darjeeling",lat:26.69505,lng:88.41159,link:""},
+{name:"Darjeeling Inspection Bungalow",district:"Darjeeling",lat:27.0413,lng:88.2685,link:"https://maps.app.goo.gl/wj9Z6jNSdgcUGZXR9"},
+{name:"Peshok Inspection Bungalow",district:"Darjeeling",lat:27.067343,lng:88.386667,link:"https://maps.app.goo.gl/6Y9gc61AnfLDS1DAA"},
+{name:"Chalsa Inspection Bungalow",district:"Jalpaiguri",lat:26.885239,lng:88.798646,link:"https://maps.app.goo.gl/2MiJutm8czoVP1Z26"},
+{name:"Cooch Behar Highway IB",district:"Cooch Behar",lat:26.3255,lng:89.4439,link:"https://maps.app.goo.gl/6cNz5hXnMPpahAmt8"},
+{name:"Cooch Behar Inspection Bungalow",district:"Cooch Behar",lat:26.319636,lng:89.446577,link:"https://maps.app.goo.gl/6HkH9mTfpeLxvDaG6"},
+{name:"Madarihat Inspection Bungalow",district:"Alipurduar",lat:26.69549,lng:89.280737,link:"https://maps.app.goo.gl/Xj6XovsLqGWN6nd58"},
+{name:"Alipurduar Inspection Bungalow",district:"Alipurduar",lat:26.498434,lng:89.528945,link:"https://maps.app.goo.gl/xfmZY3WGvH4Kp64c9"}
 ];
-function init(){
- const d=document.getElementById('dist');
- [...new Set(DATA.map(x=>x.district))].sort().forEach(v=>{
-  let o=document.createElement('option');o.value=v;o.textContent=v;d.appendChild(o);
- });
-}
-function distKm(a,b,c,d){
- const R=6371;const dLat=(c-a)*Math.PI/180,dLon=(d-b)*Math.PI/180;
- const la1=a*Math.PI/180,la2=c*Math.PI/180;
- const x=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLon/2)**2;
- return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
-}
-let uLat=null,uLng=null;
-function nearMe(){
- const s=document.getElementById('status');
- s.textContent='📡 Finding your exact location... please allow GPS permission';
- if(!navigator.geolocation){s.textContent='❌ GPS not supported on this device';return;}
- navigator.geolocation.getCurrentPosition(p=>{
-  uLat=p.coords.latitude;uLng=p.coords.longitude;
-  DATA.forEach(it=>it._d=distKm(uLat,uLng,it.lat,it.lng));
-  DATA.sort((a,b)=>a._d-b._d);
-  s.textContent=`✅ Your location: ${uLat.toFixed(5)}, ${uLng.toFixed(5)} • Nearest first • Accuracy ~${Math.round(p.coords.accuracy)}m`;
-  render(true);
- },err=>{
-  let msg='';if(err.code==1)msg='❌ Permission denied. Please enable Location in browser.';else if(err.code==2)msg='❌ Location unavailable. Turn on GPS and try outside.';else msg='❌ Timeout. Please try again.';
-  document.getElementById('status').textContent=msg;
- },{enableHighAccuracy:true,timeout:15000,maximumAge:0});
-}
-function clearF(){
- document.getElementById('q').value='';document.getElementById('dist').value='';
- document.getElementById('status').textContent='';uLat=null;
- DATA.forEach(d=>delete d._d);render();
-}
-function render(isNear=false){
- const q=document.getElementById('q').value.toLowerCase();
- const df=document.getElementById('dist').value;
- let list=DATA.filter(it=>{
-  if(df&&it.district!==df) return false;
-  if(q){const h=(it.name+' '+it.district).toLowerCase();if(!h.includes(q)) return false;}
-  return true;
- });
- document.getElementById('list').innerHTML=list.map(it=>`
-  <div class="card">
-   <b>${it.name}</b> ${it._d!==undefined?`<span class="km">${it._d.toFixed(1)} km away</span>`:''}
-   <div class="meta">📍 District: ${it.district} • ${it.lat.toFixed(5)}, ${it.lng.toFixed(5)}</div>
-   <div class="acts">
-    <a class="map" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=${it.lat},${it.lng}">🧭 Directions</a>
-    <a class="book" target="_blank" href="https://pwdbungalow.wb.gov.in">🏨 Book on Portal</a>
-   </div>
-  </div>`).join('');
- if(!isNear) document.getElementById('status').textContent=`Showing ${list.length} bungalows`;
-}
-init();render();
+function init(){const d=document.getElementById('dist');[...new Set(DATA.map(x=>x.district))].sort().forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v;d.appendChild(o)})}
+function distKm(a,b,c,d){const R=6371;const dLat=(c-a)*Math.PI/180,dLon=(d-b)*Math.PI/180;const la1=a*Math.PI/180,la2=c*Math.PI/180;const x=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLon/2)**2;return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))}
+function nearMe(){const s=document.getElementById('status');s.textContent='📡 Finding exact location...';if(!navigator.geolocation){s.textContent='❌ GPS not supported';return}navigator.geolocation.getCurrentPosition(p=>{const uLat=p.coords.latitude,uLng=p.coords.longitude;DATA.forEach(it=>it._d=distKm(uLat,uLng,it.lat,it.lng));DATA.sort((a,b)=>a._d-b._d);s.textContent=`✅ Your location: ${uLat.toFixed(5)}, ${uLng.toFixed(5)} • Accuracy ${Math.round(p.coords.accuracy)}m`;renderList()},err=>{s.textContent='❌ Allow Location permission';},{enableHighAccuracy:true,timeout:15000,maximumAge:0})}
+function clearF(){document.getElementById('q').value='';document.getElementById('dist').value='';document.getElementById('status').textContent='';DATA.forEach(d=>delete d._d);renderList()}
+function render(){renderList()}
+function renderList(){const q=document.getElementById('q').value.toLowerCase();const df=document.getElementById('dist').value;let list=DATA.filter(it=>{if(df&&it.district!==df)return false;if(q){const h=(it.name+' '+it.district).toLowerCase();if(!h.includes(q))return false}return true});document.getElementById('list').innerHTML=list.map(it=>`<div class="card"><b>${it.name}</b>${it._d!==undefined?`<span class="km">${it._d.toFixed(1)} km</span>`:''}<div class="meta">📍 ${it.district} • ${it.lat.toFixed(6)}, ${it.lng.toFixed(6)}</div><div class="acts"><a class="map" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=${it.lat},${it.lng}">🧭 Directions</a><a class="book" target="_blank" href="${it.link||`https://www.google.com/maps/dir/?api=1&destination=${it.lat},${it.lng}`}">📍 Google Pin</a><a class="book" target="_blank" href="https://pwdbungalow.wb.gov.in">🏨 Book</a></div></div>`).join('');if(!document.getElementById('status').textContent.includes('Your location'))document.getElementById('status').textContent=`Showing ${list.length} bungalows - exact locations from your file`}
+init();renderList();
 </script>
 </body>
 </html>
